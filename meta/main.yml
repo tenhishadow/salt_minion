@@ -7,13 +7,9 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - 8
-        - 9
-    - name: CentOS
-      versions:
-        - 6
-        - 7
-    - name: Red Hat Enterprise Linux
+        - stretch
+        - jessie
+    - name: EL
         - 6
         - 7 
   galaxy_tags: 
