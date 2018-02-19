@@ -14,5 +14,4 @@ galaxy_info:
         - 7 
   galaxy_tags: 
     - salt
-    - salt-minion
 dependencies: []
