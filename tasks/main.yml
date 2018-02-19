@@ -1,0 +1,21 @@
+---
+
+- name: make an installation on RHEL-based systems
+  import_tasks: "rhel.yml"
+  when:
+    - ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+
+- name: make an installation on Debian
+  import_tasks: "debian.yml"
+  when:
+    - ansible_distribution == "Debian"
+
+- name: make an installatio on Ubuntu
+  import_tasks: "ubuntu.yml"
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: configure salt minion
+  import_tasks: "config.yml"
+
+...

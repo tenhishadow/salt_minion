@@ -1,0 +1,21 @@
+---
+
+- name: add salt repo key
+  apt_key:
+    url: "{{ salt_repo_ubuntu_key }}"
+    state: present
+
+- name: add salt repo
+  apt_repository:
+    repo: "{{ salt_repo_ubuntu }}"
+    state: present
+
+- name: install or update salt minion
+  apt:
+    name: salt-minion
+    state: latest
+    update_cache: yes
+  notify:
+    - restart salt minion
+
+...

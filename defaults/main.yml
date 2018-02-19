@@ -1,0 +1,9 @@
+---
+
+salt_repo_rhel: "https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el{{ ansible_distribution_major_version }}.noarch.rpm"
+salt_repo_debian: "deb http://repo.saltstack.com/apt/debian/{{ ansible_distribution_major_version }}/amd64/latest {{ ansible_distribution_release }} main"
+salt_repo_debian_key: "https://repo.saltstack.com/apt/debian/{{ ansible_distribution_major_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+salt_repo_ubuntu: "deb http://repo.saltstack.com/apt/ubuntu/{{ ansible_distribution_major_version }}/amd64/latest {{ ansible_distribution_release }} main"
+salt_repo_ubuntu_key: "https://repo.saltstack.com/apt/ubuntu/{{ ansible_distribution_major_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+
+...

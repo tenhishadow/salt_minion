@@ -1,0 +1,29 @@
+---
+
+- name: configure salt minion
+  lineinfile:
+    path: "/etc/salt/minion"
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }} : {{ item.value }}"
+    state: "present"
+  with_dict: "{{ salt_config }}"
+  notify:
+    - restart salt minion
+
+- name: configre minion id
+  lineinfile:
+    path: "/etc/salt/minion_id"
+    line: "{{ ansible_fqdn }}"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+    state: present
+    create: yes
+
+- name: start and enable salt minion
+  service:
+    name: "salt-minion"
+    state: "started"
+    enabled: "yes"
+
+...
