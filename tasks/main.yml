@@ -38,14 +38,14 @@
 - name: configure salt minion
   lineinfile:
     path: "/etc/salt/minion"
-    regexp: "^{{ item.key }}"
+    regexp: "^{{ item.key }}: *"
     line: "{{ item.key }}: {{ item.value }}"
     state: "present"
   with_dict: "{{ salt_config }}"
   notify:
     - restart_salt_minion
 
-- name: configre minion id
+- name: configure minion id
   lineinfile:
     path: "/etc/salt/minion_id"
     line: "{{ ansible_fqdn }}"
