@@ -37,7 +37,7 @@ Example Playbook
       log_file: /dev/null
       log_level: critical
   roles:
-    - salt_minion
+    - tenhishadow.salt_minion
 ...
 ```
 
@@ -49,5 +49,4 @@ BSD
 Author Information
 ------------------
 
-Stanislav Cherkasov 
-adm@tenhi.ru
+* **[Stanislav Cherkasov](mailto:adm@tenhi.ru)** - [github](https://github.com/tenhishadow)
