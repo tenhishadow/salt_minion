@@ -1,21 +1,59 @@
 ---
 
-- name: make an installation on RHEL-based systems
-  import_tasks: "rhel.yml"
+- name: add salt repo | | EL like
+  yum_repository:
+    name: salt-latest
+    description: "SaltStack Latest Release Channel for RHEL/Centos $releasever"
+    file: salt-latest
+    baseurl: "https://{{ salt_repo }}/yum/redhat/{{ ansible_distribution_major_version }}/$basearch/latest"
+    gpgcheck: no
   when:
-    - ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+  - ansible_os_family == "RedHat"
 
-- name: make an installation on Debian
-  import_tasks: "debian.yml"
+- name: add salt repo gpg key | Debian like
+  apt_key:
+    url: "https://repo.saltstack.com/apt/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+    state: present
   when:
-    - ansible_distribution == "Debian"
+  - ansible_os_family == "Debian"
 
-- name: make an installatio on Ubuntu
-  import_tasks: "ubuntu.yml"
+- name: add salt repo | | Debian like
+  apt_repository:
+    repo: "deb http://{{ salt_repo }}/apt/{{ ansible_distribution | lower }}/{{ ansible_distribution_version }}/amd64/latest {{ ansible_distribution_release }} main"
+    state: present
+    filename: salt-latest
   when:
-    - ansible_distribution == "Ubuntu"
+  - ansible_os_family == "Debian"
+
+- name: do salt-minion installation
+  package:
+    name: salt-minion
+    state: present
 
 - name: configure salt minion
-  import_tasks: "config.yml"
+  lineinfile:
+    path: "/etc/salt/minion"
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }} : {{ item.value }}"
+    state: "present"
+  with_dict: "{{ salt_config }}"
+  notify:
+    - restart_salt_minion
+
+- name: configre minion id
+  lineinfile:
+    path: "/etc/salt/minion_id"
+    line: "{{ ansible_fqdn }}"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+    state: present
+    create: yes
+
+- name: start and enable salt minion
+  service:
+    name: "salt-minion"
+    state: "started"
+    enabled: "yes"
 
 ...
