@@ -1,5 +1,10 @@
 ---
 
+- name: 'Check mandatory variables are defined'
+  assert:
+    that:
+      - salt_config is defined
+
 - name: add salt repo | | EL like
   yum_repository:
     name: salt-latest
@@ -34,7 +39,7 @@
   lineinfile:
     path: "/etc/salt/minion"
     regexp: "^{{ item.key }}"
-    line: "{{ item.key }} : {{ item.value }}"
+    line: "{{ item.key }}: {{ item.value }}"
     state: "present"
   with_dict: "{{ salt_config }}"
   notify:
