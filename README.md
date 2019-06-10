@@ -27,17 +27,17 @@ Example Playbook
   become: yes
   vars:
     salt_config:
-      master: somemaster.domain.org
-      retry_dns: 30
-      master_port: 4506
-      conf_file: /etc/salt/minion
-      random_startup_delay: 1
-      hash_type: sha512
-      keysize: 8192
-      log_file: /dev/null
-      log_level: critical
+      master: 'somemaster.domain.org'
+      retry_dns: '30'
+      master_port: '4506'
+      conf_file: '/etc/salt/minion'
+      random_startup_delay: '1'
+      hash_type: 'sha512'
+      keysize: '8192'
+      log_file: '/dev/null'
+      log_level: 'critical'
   roles:
-    - salt_minion
+    - tenhishadow.salt_minion
 ...
 ```
 
@@ -49,5 +49,4 @@ BSD
 Author Information
 ------------------
 
-Stanislav Cherkasov 
-adm@tenhi.ru
+* **[Stanislav Cherkasov](mailto:adm@tenhi.ru)** - [github](https://github.com/tenhishadow)
