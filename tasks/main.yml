@@ -5,7 +5,7 @@
     that:
       - salt_config is defined
 
-- name: add salt repo | | EL like
+- name: add salt repo | EL like
   yum_repository:
     name: salt-latest
     description: "SaltStack Latest Release Channel for RHEL/Centos $releasever"
