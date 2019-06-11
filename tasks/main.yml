@@ -17,7 +17,7 @@
 
 - name: add salt repo gpg key | Debian like
   apt_key:
-    url: "https://repo.saltstack.com/apt/{{ ansible_distribution | lower }}/{{ ansible_distribution_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+    url: "https://{{ salt_repo  }}/apt/{{ ansible_distribution | lower }}/{{ ansible_distribution_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
     state: present
   when:
   - ansible_os_family == "Debian"
