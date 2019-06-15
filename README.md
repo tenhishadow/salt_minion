@@ -1,4 +1,4 @@
-Role Name
+tenhishadow.salt_minion
 =========
 
 This role allows you to install salt-minion from the latest salt repo
