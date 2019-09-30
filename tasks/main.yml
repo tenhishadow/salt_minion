@@ -14,6 +14,7 @@
     gpgcheck: no
   when:
   - ansible_os_family == "RedHat"
+  - hostvars[inventory_hostname]['ansible_python']['version']['major'] == '2'
 
 - name: add salt repo gpg key | Debian like
   apt_key:
@@ -21,6 +22,7 @@
     state: present
   when:
   - ansible_os_family == "Debian"
+  - hostvars[inventory_hostname]['ansible_python']['version']['major'] == '2'
 
 - name: add salt repo | Debian like
   apt_repository:
@@ -29,6 +31,36 @@
     filename: salt-latest
   when:
   - ansible_os_family == "Debian"
+  - hostvars[inventory_hostname]['ansible_python']['version']['major'] == '2'
+
+# py3
+- name: add salt repo | EL like
+  yum_repository:
+    name: salt-latest
+    description: "SaltStack Latest Release Channel for RHEL/Centos $releasever"
+    file: salt-latest
+    baseurl: "https://{{ salt_repo }}/py3/redhat/{{ ansible_distribution_major_version }}/$basearch/latest"
+    gpgcheck: no
+  when:
+  - ansible_os_family == "RedHat"
+  - hostvars[inventory_hostname]['ansible_python']['version']['major'] == '3'
+
+- name: add salt repo gpg key | Debian like
+  apt_key:
+    url: "https://{{ salt_repo  }}/py3/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+    state: present
+  when:
+  - ansible_os_family == "Debian"
+  - hostvars[inventory_hostname]['ansible_python']['version']['major'] == '3'
+
+- name: add salt repo | Debian like
+  apt_repository:
+    repo: "deb http://{{ salt_repo }}/py3/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version }}/amd64/latest {{ ansible_distribution_release }} main"
+    state: present
+    filename: salt-latest
+  when:
+  - ansible_os_family == "Debian"
+  - hostvars[inventory_hostname]['ansible_python']['version']['major'] == '3'
 
 - name: do salt-minion installation
   package:
